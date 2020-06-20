@@ -85,7 +85,7 @@ let g:ycm_server_python_interpreter = 'python3'
 let python_highlight_all = 1
 syntax on
 "colorscheme zenburn
-colorscheme gruvbox
+"colorscheme gruvbox
 "colorscheme hackerman
 set termguicolors
 set background=dark    " Setting dark mode

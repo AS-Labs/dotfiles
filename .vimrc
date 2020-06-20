@@ -1,3 +1,4 @@
+" TEST
 " To install vundle: git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 " set the runtime path to include Vundle and initialize

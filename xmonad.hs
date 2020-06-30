@@ -92,7 +92,7 @@ myTerminal :: String
 myTerminal = "alacritty"   -- Sets default terminal
 
 myBorderWidth :: Dimension
-myBorderWidth = 2          -- Sets border width for windows
+myBorderWidth = 1          -- Sets border width for windows
 
 myNormColor :: String
 myNormColor   = "#292d3e"  -- Border color of normal windows
@@ -112,6 +112,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
           spawnOnce "nitrogen --restore &" 
+          spawnOnce "compton"
           -- spawnOnce "kak -d -s mysession &"
           setWMName "LG3D"
 
@@ -431,6 +432,8 @@ myKeys =
         --, ("M-S-<Up>", spawn "lux -a 10%")
         --, ("M-S-<Down>", spawn "lux -s 10%")
 
+    -- Lock
+        , ("M-S-l", spawn "betterlockscreen -l")
     --- My Applications (Super+Alt+Key)
         , ("M-M1-a", spawn (myTerminal ++ " -e ncpamixer"))
         , ("M-M1-b", spawn "surf www.youtube.com/c/DistroTube/")
@@ -633,6 +636,7 @@ main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
     xmproc0 <- spawnPipe "xmobar -x 0 /home/as-labs/.config/xmobar/xmobarrc"
+    xmproc1 <- spawnPipe "xmobar -x 1 /home/as-labs/.config/xmobar/xmobarrc1"
     -- the xmonad, ya know...what the WM is named after!
     xmonad $ ewmh def
         { manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageDocks
@@ -653,7 +657,7 @@ main = do
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
         , logHook = dynamicLogWithPP $ xmobarPP
-                       { ppOutput = \x -> hPutStrLn xmproc0 x
+                       { ppOutput = \x -> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
                        , ppCurrent = xmobarColor "#c3e88d" "" . wrap "[" "]" -- Current workspace in xmobar
                        , ppVisible = xmobarColor "#c3e88d" ""                -- Visible but not current workspace
                        , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""   -- Hidden workspaces in xmobar

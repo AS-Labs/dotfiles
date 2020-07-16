@@ -24,7 +24,6 @@ import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import qualified XMonad.Actions.Search as S
 import Graphics.X11.ExtraTypes.XF86
-import XMonad.Util.Brightness
 
     -- Data
 import Data.Char (isSpace)
@@ -496,12 +495,10 @@ xmobarEscape = concatMap doubleLts
 
 myWorkspaces :: Forest String
 myWorkspaces = [ Node "dev" []
-               , Node "etc"       -- for everyday activity's
-                   [ Node "1" []   --  with 4 extra sub-workspaces, for even more activity's
-                   , Node "2" []
-                   , Node "3" []
-                   , Node "anon" []
-                   ]
+               , Node "media" []      -- for everyday activity's
+               , Node "secondM" []      -- for everyday activity's
+               , Node "web" []      -- for everyday activity's
+               , Node "back" []      -- for everyday activity's
                    ]
 ------------------------------------------------------------------------
 -- MANAGEHOOK

@@ -1,1 +1,1 @@
-awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)
+amixer sget Master|grep Right:|awk -F[][] '/%/ { print $2 }'

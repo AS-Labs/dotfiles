@@ -47,7 +47,7 @@ syntax enable
 set encoding=utf-8
 
 " show line numbers
-set number
+set number relativenumber
 
 " system clipboard
 set clipboard=unnamed
@@ -84,6 +84,7 @@ let g:ycm_server_python_interpreter = 'python3'
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
 syntax on
+"colorscheme cyberpunk-neon
 "colorscheme zenburn
 "colorscheme gruvbox
 "colorscheme hackerman

@@ -65,8 +65,9 @@ if [ "$bootyesno" = "yes" ] ; then
         if [ "$amd_kern_stub" = "1" ]; then
             echo "amd_iommu already exists in conf file";
         else
-            echo "Adding amd_iommu=on";
+            echo "Adding amd_iommu=on and iommu=pt";
             sudo kernelstub -a amd_iommu=on;
+            sudo kernalstub -a iommu=pt;
         fi
 
     elif [ "$intel_check" = "1" ] ; then
@@ -76,8 +77,9 @@ if [ "$bootyesno" = "yes" ] ; then
         if [ "$intel_kern_stub" = "1" ] ; then
             echo "intel_iommu already exists in conf file";
         else
-            echo "Adding intel_iommu=on";
+            echo "Adding intel_iommu=on and iommu=pt";
             sudo kernalstub -a intel_iommu=on;
+            sudo kernalstub -a iommu=pt;
         fi
     else
         echo "No CPU detected!? nah, just a problem with the script most likely ;)"

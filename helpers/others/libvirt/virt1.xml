@@ -1,0 +1,16 @@
+<network>
+  <name>virt1</name>
+  <uuid>c387430a-d3f9-4859-a9bd-3a25987de672</uuid>
+  <forward dev='enp3s0' mode='nat'>
+    <interface dev='enp3s0'/>
+  </forward>
+  <bridge name='virbr1' stp='on' delay='0'/>
+  <mac address='52:54:00:c8:36:d2'/>
+  <domain name='virt1'/>
+  <ip address='192.168.100.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.100.128' end='192.168.100.254'/>
+    </dhcp>
+  </ip>
+</network>
+

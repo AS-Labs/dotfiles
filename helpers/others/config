@@ -1,0 +1,67 @@
+## User
+VM_USER=as-ryzen
+
+## IOMMU groups
+IOMMU_GPU="0a:00.0"
+IOMMU_GPU_AUDIO="0a:00.1"
+IOMMU_GPU_USB="0a:00.2"
+IOMMU_GPU_SERIAL="0a:00.3"
+
+## For extracting the VBIOS
+##VBIOS_EXTRACT_PATH=/root/VBIOS.rom
+##NVFLASH=/root/nvflash_linux
+##extract_videobusid="0000:$IOMMU_GPU"
+
+## Virsh devices
+VIRSH_GPU=pci_0000_0a_00_0
+VIRSH_GPU_AUDIO=pci_0000_0a_00_1
+VIRSH_GPU_USB=pci_0000_0a_00_2
+VIRSH_GPU_SERIAL=pci_0000_0a_00_3
+
+# PCI BUS ID
+videoid="10de 1e07"
+audioid="10de 10f7"
+nvusbid="10de 1ad6"
+nvbusid="10de 1ad7"
+videobusid="0000:$IOMMU_GPU"
+audiobusid="0000:$IOMMU_GPU_AUDIO"
+
+## QEMU options
+RAM=24G
+CORES=16
+MACOS_RAM=8G
+MACOS_CORES=4
+
+## Network
+TAP_INTERFACE=tap0
+TAP_IP="10.10.10.1/24"
+DNSMASQ_CONF="${BASH_SOURCE%/*}/dnsmasq.conf"
+SMB_CONF="${BASH_SOURCE%/*}/smb.conf"
+
+## Log file
+LOG=/home/$VM_USER/qemu_log.txt
+
+## Local path for storage
+IMAGES=/home/$VM_USER/win10files/
+
+## VBIOS
+#VBIOS=$IMAGES/VBIOS.rom
+
+## Windows
+VIRTIO=$IMAGES/virtio-win-0.1.189.iso
+WINDOWS_ISO=$IMAGES/Win10_20H2_English_x64.iso
+WINDOWS_IMG=$IMAGES/windows.qcow2
+OVMF=/usr/share/ovmf/x64/OVMF_CODE.fd
+OVMF_VARS=/usr/share/ovmf/x64/OVMF_VARS.fd
+
+## MacOS
+##MACOS_ISO=$IMAGES/mojave.iso
+##MACOS_IMG=$IMAGES/mojave.qcow2
+##MACOS_CLOVER=$IMAGES/clover.qcow2
+##MACOS_OVMF=$IMAGES/MACOS_OVMF_CODE.fd
+##MACOS_OVMF_VARS=$IMAGES/MACOS_OVMF_VARS.fd
+##MACOS_OPTIONS="+pcid,+ssse3,+sse4.2,+popcnt,+aes,+xsave,+avx,+xsaveopt,avx2,+smep,check"
+
+## Ulimit
+ULIMIT=$(ulimit -a | grep "max locked memory" | awk '{print $6}')
+ULIMIT_TARGET=$(( $(echo $RAM | tr -d 'G')*1048576+100000 ))

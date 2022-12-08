@@ -33,19 +33,19 @@ scrape_configs:
       __path__: /var/lib/docker/containers/*/*log
 EOF
 
-sudo echo "[Unit]" >> /etc/systemd/system/promtail.service
-sudo echo "Description=Promtail" >> /etc/systemd/system/promtail.service
-sudo echo "After=network.target" >> /etc/systemd/system/promtail.service
-sudo echo "" >> /etc/systemd/system/promtail.service
-sudo echo "[Service]" >> /etc/systemd/system/promtail.service
-sudo echo "User=root" >> /etc/systemd/system/promtail.service
-sudo echo "Group=root" >> /etc/systemd/system/promtail.service
-sudo echo "Type=simple" >> /etc/systemd/system/promtail.service
-sudo echo "ExecStart=/usr/bin/promtail -config.file /usr/local/bin/config-promtail.yml
-" >> /etc/systemd/system/promtail.service
-sudo echo "" >> /etc/systemd/system/promtail.service
-sudo echo "[Install]" >> /etc/systemd/system/promtail.service
-sudo echo "WantedBy=multi-user.target" >> /etc/systemd/system/promtail.service
+sudo tee /etc/systemd/system/promtail.service <<EOF
+[Unit]
+Description=Promtail
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/bin/promtail -config.file /usr/local/bin/config-promtail.yml
+[Install]
+WantedBy=multi-user.target
+EOF
 
 
 

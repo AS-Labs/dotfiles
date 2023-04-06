@@ -6,6 +6,7 @@ clear
 
 
 echo "First we need to make sure we can access our machine if something wrong happens"
+echo "openssh server should be installed"
 
 read -p "Install openssh-server? (yes/no) " yesno
 if [ "$yesno" = "yes" ] ; then

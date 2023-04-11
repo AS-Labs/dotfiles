@@ -1,5 +1,9 @@
 #!/bin/bash
-wget "https://github.com/grafana/loki/releases/download/v2.4.1/promtail-linux-amd64.zip"
+#
+# Simple script to automate the install of promtail agent on servers and start scraping logs from /var/log and /var/lib/docker/containers
+#
+#TODO all vars will be added later to automate the process
+wget "https://github.com/grafana/loki/releases/download/$latest_version/promtail-linux-amd64.zip"
 unzip promtail-linux-amd64.zip
 chmod a+x promtail-linux-amd64
 sudo mv promtail-linux-amd64 /usr/bin/promtail
@@ -14,7 +18,7 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://192.168.0.154:3100/loki/api/v1/push
+  - url: http://$server_IP:$port/loki/api/v1/push
 
 scrape_configs:
 - job_name: system
@@ -46,7 +50,6 @@ ExecStart=/usr/bin/promtail -config.file /usr/local/bin/config-promtail.yml
 [Install]
 WantedBy=multi-user.target
 EOF
-
 
 
 sudo systemctl daemon-reload

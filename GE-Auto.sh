@@ -17,7 +17,7 @@ install() {
     if [ ! -f "steam.sh" ]; then
         # Follow symlink if there is no steam.sh
         if [ ! -f "./steam/steam.sh" ]; then
-            echo "--> steam.sh could not be found. Please make sure Steam is properly installed."
+            echo "--> steam.sh could not be found. Please make sure Steam is properly installed or in your PATH variable and sourced to your existing session."
             return 1
         fi
         cd "steam"

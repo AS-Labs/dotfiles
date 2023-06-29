@@ -24,7 +24,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -37,12 +37,13 @@ bindsym $mod+Shift+Return exec --no-startup-id dmenu_run
 
 exec --no-startup-id start-pulseaudio-x11
 exec --no-startup-id pa-applet
+exec --no-startup-id xset s off -dpms
 
 ################################################################################################
 
 # Start Applications
 bindsym $mod+t exec --no-startup-id "pkill picom;pkill xrootgif; nitrogen --restore"
-bindsym $mod+Shift+T exec --no-startup-id "picom -b;xrootgif --daemon /home/as-labs/Pictures/cyber.gif"
+bindsym $mod+Shift+T exec --no-startup-id "picom -b;xrootgif --daemon -d :0 /home/as-labs/Pictures/train.gif;xrootgit --daemon -d :1 /home/as-labs/Pictures/train.gif"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
@@ -225,7 +226,7 @@ bindsym $mod+Shift+O exec --no-startup-id /home/as-labs/lock.sh
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id picom -b ; sleep 1 ; xrootgif --daemon /home/as-labs/Pictures/cyber.gif
+exec --no-startup-id picom -b ; sleep 1 ; xrootgif --daemon /home/as-labs/Pictures/train.gif
 exec_always --no-startup-id autotiling
 exec --no-startup-id nm-applet
 exec --no-startup-id pamac-tray
@@ -312,8 +313,8 @@ bindsym $mod+m bar mode toggle
 # Set inner/outer gaps
 #gaps inner 14
 #gaps outer -2
-gaps inner 50
-gaps outer 50
+gaps inner 100
+gaps outer 100
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
@@ -392,6 +393,6 @@ set $volumestep 5
 #set $alsacard 1
 
 # append "-c $alsacard" without quotes to override default card
-bindsym XF86AudioRaiseVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig up $volumestep
-bindsym XF86AudioLowerVolume exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig down $volumestep
-bindsym XF86AudioMute        exec --no-startup-id $volumepath/volume -an -t $statuscmd -u $statussig mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound

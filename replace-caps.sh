@@ -3,3 +3,5 @@
 
 
 setxkbmap -option caps:swapescape
+
+

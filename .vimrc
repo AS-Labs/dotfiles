@@ -29,13 +29,6 @@ Plug 'vim-scripts/AutoComplPop'
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'yuttie/comfortable-motion.vim'
 
-
-
-
-
-
-
-
 set background=dark
 set complete+=kspell
 set completeopt=menuone,longest
@@ -46,7 +39,7 @@ call plug#end()
 highlight Normal ctermbg=NONE guibg=NONE
 highlight NonText ctermbg=NONE guibg=NONE
 autocmd VimEnter * hi Normal ctermbg=NONE guibg=NONE
-colorscheme gruvbox
+#colorscheme gruvbox
 let g:gruvbox_transparent_bg = 1
 
 autocmd BufWritePre *.py execute ':Black'

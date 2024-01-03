@@ -19,28 +19,34 @@ set wildignore+=**/android/*
 set wildignore+=**/ios/*
 set wildignore+=**/.git/*
 set nohlsearch
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 " Yes, I am a sneaky snek now
 Plug 'ambv/black'
 
 " Plebvim lsp Plugins
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-Plug 'onsails/lspkind-nvim'
-Plug 'nvim-lua/lsp_extensions.nvim'
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'williamboman/nvim-lsp-installer'
+"Plug 'hrsh7th/cmp-nvim-lsp'
+"Plug 'hrsh7th/cmp-buffer'
+"Plug 'hrsh7th/nvim-cmp'
+"Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'onsails/lspkind-nvim'
+"Plug 'nvim-lua/lsp_extensions.nvim'
 
 " Diagram
 Plug 'jbyuki/venn.nvim'
 
 " Plug 'nvim-lua/completion-nvim'
-Plug 'glepnir/lspsaga.nvim'
-Plug 'simrat39/symbols-outline.nvim'
+"Plug 'glepnir/lspsaga.nvim'
+"Plug 'simrat39/symbols-outline.nvim'
 " Plug 'tjdevries/nlua.nvim'
 " Plug 'tjdevries/lsp_extensions.nvim'
 

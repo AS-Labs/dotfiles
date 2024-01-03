@@ -1,0 +1,146 @@
+local execute = vim.api.nvim_command
+local fn = vim.fn
+
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
+-- returns the require for use in `config` parameter of packer's use
+-- expects the name of the config file
+function get_config(name)
+	return string.format('require("config/%s")', name)
+end
+
+-- bootstrap packer if not installed
+if not vim.loop.fs_stat(vim.fn.glob(install_path)) then
+	packer_bootstrap = fn.system({
+		"git",
+		"clone",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	})
+	execute("packadd packer.nvim")
+end
+
+-- initialize and configure packer
+local packer = require("packer")
+
+packer.init({
+	enable = true, -- enable profiling via :PackerCompile profile=true
+	threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+	compile_path = vim.fn.stdpath('data')..'/site/plugin/packer.lua',
+	display = {
+		open_fn = function()
+			return require("packer.util").float { border = "rounded" }
+		end,
+	}
+})
+
+local use = packer.use
+packer.reset()
+
+-- actual plugins list
+use {'wbthomason/packer.nvim'}
+
+use {'folke/tokyonight.nvim', config = get_config("tokyonight")}
+
+use { "neovim/nvim-lspconfig", config = get_config("lsp") }
+
+use({
+	"nvim-telescope/telescope.nvim",
+	requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
+	config = get_config("telescope"),
+})
+
+use({ "nvim-telescope/telescope-file-browser.nvim" })
+
+use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+    },
+    config = get_config("nvim-tree")
+}
+
+use({ 
+	"nvim-lualine/lualine.nvim",
+	config = get_config("lualine"),
+	event = "VimEnter",
+	requires = { "kyazdani42/nvim-web-devicons", opt = true },
+})
+
+use({
+	"nvim-treesitter/nvim-treesitter",
+	config = get_config("treesitter"),
+	after = "nvim-lspconfig",
+	run = ":TSUpdate",
+})
+
+use { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" }
+
+use({
+	"hrsh7th/nvim-cmp",
+	requires = {
+		{ "onsails/lspkind-nvim" },
+		{ "hrsh7th/cmp-nvim-lsp" },
+		{ "hrsh7th/cmp-buffer" },
+		{ "hrsh7th/cmp-path" },
+		{ "L3MON4D3/LuaSnip" },
+		{ "saadparwaiz1/cmp_luasnip" },
+	},
+	after = "nvim-lspconfig",
+	config = get_config("cmp"),
+})
+
+use({
+	"simrat39/symbols-outline.nvim",
+--	cmd = { "SymbolsOutline" },
+	config = get_config("symbols"),
+})
+
+use({
+	"sindrets/diffview.nvim",
+	cmd = {
+		"DiffviewOpen",
+		"DiffviewClose",
+		"DiffviewToggleFiles",
+		"DiffviewFocusFiles",
+	},
+	config = get_config("diffview"),
+})
+
+use({
+	"akinsho/nvim-toggleterm.lua",
+	keys = { "<C-n>", "<leader>fl", "<leader>gt" },
+	config = get_config("toggleterm"),
+})
+
+use("ironhouzi/starlite-nvim")
+
+use({ "folke/which-key.nvim", config = get_config("which") })
+
+use({
+	"https://github.com/yorickpeterse/nvim-window.git",
+	config = get_config("nvim-window"),
+})
+
+use({ "tpope/vim-unimpaired" })
+use({ "tpope/vim-fugitive" })
+
+use({
+	"natecraddock/workspaces.nvim",
+	config = get_config("workspaces"),
+})
+use({
+  "jackMort/ChatGPT.nvim",
+    config = function()
+      require("chatgpt").setup()
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+})
+
+if packer_bootstrap then
+	require("packer").sync()
+end
